@@ -1,13 +1,14 @@
 package com.advertise.entities;
 
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+@Setter
 @Entity(name = "users")
 public class User {
 
@@ -31,6 +32,6 @@ public class User {
     private String state;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 }
