@@ -1,9 +1,6 @@
 package com.advertise.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "posts")
@@ -17,7 +14,7 @@ public class Post {
     private String title;
 
     @Column(nullable = false)
-    private String desc;
+    private String postDesc;
 
     @Column(nullable = false)
     private Short owner;
@@ -25,10 +22,10 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, length = 30)
+    @Transient
     private String city;
 
-    @Column(nullable = false, length = 2)
+    @Transient
     private String state;
 
 }

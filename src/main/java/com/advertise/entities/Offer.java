@@ -14,7 +14,7 @@ public class Offer {
     private Long id;
 
     @Column(nullable = false)
-    private String desc;
+    private String offerDesc;
 
     @Column(nullable = false, length = 30)
     private String price;
