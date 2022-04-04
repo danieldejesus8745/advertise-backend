@@ -32,7 +32,7 @@ public class PostService {
         return new ResponseModel(200, "Novo post adicionado com sucesso");
     }
 
-    public List<PostDTO> getAllPostsByUuid(UUID uuid) {
+    public List<PostDTO> getPostsByUuid(UUID uuid) {
         List<Post> posts = postRepository.findAllByOwner(uuid).orElse(null);
 
         if (Objects.isNull(posts)) {

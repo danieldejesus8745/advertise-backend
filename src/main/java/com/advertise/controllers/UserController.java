@@ -4,10 +4,9 @@ import com.advertise.dto.UserDTO;
 import com.advertise.services.UserService;
 import com.advertise.utils.ResponseModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,6 +18,11 @@ public class UserController {
     @PostMapping
     public ResponseModel addUser(@RequestBody UserDTO userDTO) {
         return userService.addUser(userDTO);
+    }
+
+    @GetMapping(path = "/login/{email}/{password}")
+    public UUID login(@PathVariable("email") String email, @PathVariable("password") String password) {
+        return userService.login(email, password);
     }
 
 }

@@ -2,6 +2,7 @@ package com.advertise.controllers;
 
 import com.advertise.dto.PostDTO;
 import com.advertise.services.PostService;
+import com.advertise.services.TokenService;
 import com.advertise.utils.ResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +16,17 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
+    private final TokenService tokenService;
 
     @PostMapping
-    public ResponseModel addPost(@RequestBody PostDTO postDTO) {
+    public ResponseModel addPost(@RequestHeader("Authorization") String token, @RequestBody PostDTO postDTO) {
+        tokenService.validateToken(UUID.fromString(token));
         return postService.addPost(postDTO);
     }
 
     @GetMapping(path = "/{uuid}")
-    public List<PostDTO> getAllPostsByUuid(@PathVariable("uuid") UUID uuid) {
-        return postService.getAllPostsByUuid(uuid);
+    public List<PostDTO> getPostsByUuid(@PathVariable("uuid") UUID uuid) {
+        return postService.getPostsByUuid(uuid);
     }
 
 }
