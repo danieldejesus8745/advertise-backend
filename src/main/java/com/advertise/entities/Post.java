@@ -2,13 +2,14 @@ package com.advertise.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, length = 30)
     private String title;

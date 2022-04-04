@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Setter
 @Entity(name = "users")
@@ -14,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Short id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;

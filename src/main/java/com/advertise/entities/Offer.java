@@ -5,13 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "offers")
 public class Offer {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String offerDesc;
