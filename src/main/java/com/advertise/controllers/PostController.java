@@ -4,10 +4,10 @@ import com.advertise.dto.PostDTO;
 import com.advertise.services.PostService;
 import com.advertise.utils.ResponseModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,6 +19,11 @@ public class PostController {
     @PostMapping
     public ResponseModel addPost(@RequestBody PostDTO postDTO) {
         return postService.addPost(postDTO);
+    }
+
+    @GetMapping(path = "/{uuid}")
+    public List<PostDTO> getAllPostsByUuid(@PathVariable("uuid") UUID uuid) {
+        return postService.getAllPostsByUuid(uuid);
     }
 
 }

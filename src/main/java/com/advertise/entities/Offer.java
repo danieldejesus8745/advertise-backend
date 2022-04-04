@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Setter
@@ -16,10 +15,10 @@ public class Offer {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID uuid;
 
     @Column(nullable = false)
-    private String offerDesc;
+    private String description;
 
     @Column(nullable = false, length = 30)
     private String price;

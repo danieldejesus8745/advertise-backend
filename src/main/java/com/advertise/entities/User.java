@@ -1,5 +1,6 @@
 package com.advertise.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID uuid;
 
     @Column(nullable = false)
     private String name;
@@ -23,6 +24,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false, length = 100)
     private String password;
 

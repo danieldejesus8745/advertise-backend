@@ -17,7 +17,7 @@ public class OfferService {
 
     public ResponseModel addOffer(OfferDTO offerDTO) {
         Offer offer = new Offer();
-        offer.setOfferDesc(offerDTO.getOfferDesc());
+        offer.setDescription(offerDTO.getDescription());
         offer.setPrice(offerDTO.getPrice());
         offer.setOwner(offerDTO.getOwner());
         offer.setPost(offerDTO.getPost());

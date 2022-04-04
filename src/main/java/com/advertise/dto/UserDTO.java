@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Getter
 public class UserDTO {
 
-    private Short id;
+    private Short uuid;
     private String name;
     private String email;
     private String password;
     private String city;
     private String state;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 }
