@@ -5,6 +5,7 @@ import com.advertise.entities.User;
 import com.advertise.repositories.UserRepository;
 import com.advertise.utils.ResponseModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ResponseModel addUser(UserDTO userDTO) {
         checkIfEmailIsAlreadyRegistered(userDTO.getEmail());
@@ -22,7 +24,7 @@ public class UserService {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setCity(userDTO.getCity());
         user.setState(userDTO.getState());
         user.setCreatedAt(LocalDate.now());
