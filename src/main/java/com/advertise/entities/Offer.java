@@ -1,12 +1,16 @@
 package com.advertise.entities;
 
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Setter
 @Entity(name = "offers")
 public class Offer {
 
@@ -21,12 +25,12 @@ public class Offer {
     private String price;
 
     @Column(nullable = false)
-    private Short owner;
+    private UUID owner;
 
     @Column(nullable = false)
-    private Short post;
+    private UUID post;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 }

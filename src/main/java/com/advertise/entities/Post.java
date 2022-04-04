@@ -1,9 +1,12 @@
 package com.advertise.entities;
 
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
+@Setter
 @Entity(name = "posts")
 public class Post {
 
@@ -18,10 +21,10 @@ public class Post {
     private String postDesc;
 
     @Column(nullable = false)
-    private Short owner;
+    private UUID owner;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Transient
     private String city;
