@@ -4,6 +4,7 @@ import com.advertise.entities.Token;
 import com.advertise.repositories.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class TokenService {
         return persistenToken.getUuid();
     }
 
+    @Transactional
     public void validateToken(UUID uuid) {
         Token token = tokenRepository.findByUuid(uuid).orElse(null);
 
