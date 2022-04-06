@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/login/{email}/{password}")
-    public UUID login(@PathVariable("email") String email, @PathVariable("password") String password) {
+    public ResponseModel login(@PathVariable("email") String email, @PathVariable("password") String password) {
         return userService.login(email, password);
     }
 

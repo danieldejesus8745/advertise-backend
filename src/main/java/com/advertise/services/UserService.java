@@ -37,14 +37,18 @@ public class UserService {
        return new ResponseModel(200, "Novo usuário cadastrado com sucesso");
     }
 
-    public UUID login(String email, String password) {
+    public ResponseModel login(String email, String password) {
         User userFound = findUserByEmail(email);
 
         if (Objects.isNull(userFound)) {
             throw new IllegalStateException("Usuário não encontrado");
         }
 
-        return saveAndGetToken(password, userFound);
+        return new ResponseModel(
+                200,
+                "Login efetuado com sucesso",
+                saveAndGetToken(password, userFound)
+        );
     }
 
     private UUID saveAndGetToken(String password, User userFound) {
