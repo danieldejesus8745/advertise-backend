@@ -13,4 +13,6 @@ public interface TokenRepository extends JpaRepository<Token, UUID> {
     Optional<Token> findByUuid(UUID uuid);
 
     void deleteByUuid(UUID uuid);
+
+    Optional<Token> findByOwner(UUID uuid);
 }

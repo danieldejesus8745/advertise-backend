@@ -44,21 +44,29 @@ public class UserService {
             throw new IllegalStateException("Usuário não encontrado");
         }
 
+        UUID createdToken = saveAndGetToken(password, userFound);
+
         return new ResponseModel(
                 200,
                 "Login efetuado com sucesso",
-                saveAndGetToken(password, userFound)
+                createdToken
         );
     }
 
     private UUID saveAndGetToken(String password, User userFound) {
         if (passwordEncoder.matches(password, userFound.getPassword())) {
-            Token token = new Token();
-            token.setExpiration(System.currentTimeMillis() + 1200000);
-            token.setOwner(userFound.getUuid());
-            token.setCreatedAt(LocalDate.now());
+            Token tokenFoundByOwner = tokenService.findByOwner(userFound.getUuid());
 
-            return tokenService.addToken(token);
+            if (Objects.isNull(tokenFoundByOwner)) {
+                Token token = new Token();
+                token.setExpiration(System.currentTimeMillis() + 1200000);
+                token.setOwner(userFound.getUuid());
+                token.setCreatedAt(LocalDate.now());
+
+                return tokenService.addToken(token);
+            } else {
+                return tokenFoundByOwner.getUuid();
+            }
         } else {
             throw new IllegalStateException("E-mail ou senha incorreta");
         }
