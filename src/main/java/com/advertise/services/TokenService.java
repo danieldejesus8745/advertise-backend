@@ -5,8 +5,8 @@ import com.advertise.repositories.TokenRepository;
 import com.advertise.utils.ResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,6 +39,22 @@ public class TokenService {
 
     public Token findByOwner(UUID uuid) {
         return tokenRepository.findByOwner(uuid).orElse(null);
+    }
+
+    @Transactional
+    public boolean booleanTokenValidation(UUID uuid) {
+        Token token = tokenRepository.findByUuid(uuid).orElse(null);
+
+        if (Objects.isNull(token)) {
+            return false;
+        }
+
+        return System.currentTimeMillis() < token.getExpiration();
+    }
+
+    @Transactional
+    public void deleteToken(UUID uuid) {
+        tokenRepository.deleteByUuid(uuid);
     }
 
 }

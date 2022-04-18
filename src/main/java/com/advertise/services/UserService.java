@@ -65,7 +65,20 @@ public class UserService {
 
                 return tokenService.addToken(token);
             } else {
-                return tokenFoundByOwner.getUuid();
+                boolean validToken = tokenService.booleanTokenValidation(tokenFoundByOwner.getUuid());
+
+                if (!validToken) {
+                    tokenService.deleteToken(tokenFoundByOwner.getUuid());
+
+                    Token token = new Token();
+                    token.setExpiration(System.currentTimeMillis() + 1200000);
+                    token.setOwner(userFound.getUuid());
+                    token.setCreatedAt(LocalDate.now());
+
+                    return tokenService.addToken(token);
+                } else {
+                    return tokenFoundByOwner.getUuid();
+                }
             }
         } else {
             throw new IllegalStateException("E-mail ou senha incorreta");
