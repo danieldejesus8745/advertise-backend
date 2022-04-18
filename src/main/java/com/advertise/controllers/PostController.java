@@ -21,7 +21,7 @@ public class PostController {
     @PostMapping
     public ResponseModel addPost(@RequestHeader("Authorization") String token, @RequestBody PostDTO postDTO) {
         tokenService.validateToken(UUID.fromString(token));
-        return postService.addPost(postDTO);
+        return postService.addPost(token, postDTO);
     }
 
     @GetMapping(path = "/{uuid}")
