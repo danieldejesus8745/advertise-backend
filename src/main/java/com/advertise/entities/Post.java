@@ -28,10 +28,8 @@ public class Post {
     @Column(nullable = false)
     private LocalDate createdAt;
 
-    @Transient
     private String city;
 
-    @Transient
     private String state;
 
 }

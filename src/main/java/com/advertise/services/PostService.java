@@ -19,6 +19,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.advertise.utils.Messages.*;
+
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -29,37 +31,48 @@ public class PostService {
     private final UserRepository userRepository;
 
     public ResponseModel addPost(String token, PostDTO postDTO) {
-        UUID ownerByToken = getOwnerByToken(token);
+        User userFound = getOwnerByToken(token);
 
         Post post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
-        post.setOwner(ownerByToken);
+        post.setOwner(userFound.getUuid());
         post.setCreatedAt(LocalDate.now());
+        post.setCity(userFound.getCity());
+        post.setState(userFound.getState());
 
         postRepository.save(post);
 
-        return new ResponseModel(200, Messages.MESSAGE_3.getDescription());
+        return new ResponseModel(200, MESSAGE_3.getDescription());
     }
 
-    private UUID getOwnerByToken(String token) {
+    private User getOwnerByToken(String token) {
         Token tokenFound = tokenRepository.findByUuid(UUID.fromString(token)).orElse(null);
 
         if (Objects.nonNull(tokenFound)) {
-            return tokenFound.getOwner();
+            User user = userRepository.findByUuid(tokenFound.getOwner()).orElse(null);
+            if (Objects.nonNull(user)) {
+                return user;
+            } else {
+                throw new IllegalStateException(MESSAGE_4.getDescription());
+            }
         } else {
-            throw new IllegalStateException(Messages.MESSAGE_1.getDescription());
+            throw new IllegalStateException(MESSAGE_1.getDescription());
         }
     }
 
-    public List<PostDTO> getPostsByUuid(UUID uuid) {
-        List<Post> posts = postRepository.findAllByOwner(uuid).orElse(null);
+    public List<PostDTO> getPostsByUuid(String token) {
+        User userFoundByToken = getOwnerByToken(token);
+        List<Post> posts = postRepository.findAllByOwner(userFoundByToken.getUuid()).orElse(null);
 
         if (Objects.isNull(posts)) {
-            throw new IllegalStateException(Messages.MESSAGE_2.getDescription());
+            throw new IllegalStateException(MESSAGE_2.getDescription());
         }
 
         return postMapper.listPostToListPostDTO(posts);
     }
 
+    public List<PostDTO> getAllPosts() {
+        return postMapper.listPostToListPostDTO(postRepository.findAll());
+    }
 }

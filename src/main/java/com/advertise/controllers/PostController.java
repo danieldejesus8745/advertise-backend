@@ -24,9 +24,16 @@ public class PostController {
         return postService.addPost(token, postDTO);
     }
 
-    @GetMapping(path = "/{uuid}")
-    public List<PostDTO> getPostsByUuid(@PathVariable("uuid") UUID uuid) {
-        return postService.getPostsByUuid(uuid);
+    @GetMapping(path = "/your-posts")
+    public List<PostDTO> getPostsByUuid(@RequestHeader("Authorization") String token) {
+        tokenService.validateToken(UUID.fromString(token));
+        return postService.getPostsByUuid(token);
+    }
+
+    @GetMapping
+    public List<PostDTO> getAllPosts(@RequestHeader("Authorization") String token) {
+        tokenService.validateToken(UUID.fromString(token));
+        return postService.getAllPosts();
     }
 
 }
